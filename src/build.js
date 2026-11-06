@@ -238,7 +238,7 @@ const designs = [
 ];
 
 designs.forEach((d, n) => { d.file = `${n + 1}-${d.slug}.html`; });
-const outDir = path.join(__dirname, '..', 'designs');
+const outDir = process.env.ART ? path.join(process.env.ART, 'designs') : path.join(__dirname, '..', 'designs');
 fs.mkdirSync(outDir, { recursive: true });
 
 designs.forEach((d, n) => {

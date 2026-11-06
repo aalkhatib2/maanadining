@@ -50,7 +50,7 @@ const locCard = (l, map = false) => `
     <p class="addr">${i('pin')}<span>${l.street}<br>${l.csz}</span></p>
     <p class="addr">${i('phone')}<a href="tel:${l.tel}">${l.phone}</a></p>
     <div class="loc-hours"><span class="kicker">${i('clock')}Shop Hours</span>${hoursList()}</div>
-    ${map ? `<div class="map"><iframe loading="lazy" title="Map of ${l.city} location" src="${l.embed}"></iframe></div>` : ''}
+    ${map ? (process.env.ART ? `<a class="map map-link" href="${l.map}" target="_blank" rel="noopener">${i('pin')}<span><b>${l.street}, ${l.csz}</b>Open in Google Maps</span></a>` : `<div class="map"><iframe loading="lazy" title="Map of ${l.city} location" src="${l.embed}"></iframe></div>`) : ''}
     <div class="row">${btnBook()}<a class="btn btn-s" href="${l.map}" target="_blank" rel="noopener">${i('pin')}Directions</a><a class="btn btn-g" href="#contact">Contact Us</a></div>
   </div>`;
 const social = () => `<div class="social">${C.social.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('')}</div>`;
@@ -107,7 +107,7 @@ const S = {
 
 const coupons = () => `<div class="coupons">${C.coupons.map(c => `
   <div class="coupon"><span class="kicker">Coupon</span><div class="big">${c.big}</div><h3>${c.title}</h3><p>${C.couponFine}</p><p class="exp">${i('clock')}${C.couponExp}</p>
-  <div class="row"><a class="btn btn-p" href="#appointments">Redeem</a><button class="btn btn-g" onclick="window.print()">Print</button></div></div>`).join('')}</div>`;
+  <div class="row"><a class="btn btn-p" href="#appointments">Redeem</a>${process.env.ART ? '' : '<button class="btn btn-g" onclick="window.print()">Print</button>'}</div></div>`).join('')}</div>`;
 
 // ---------- pages ----------
 const pages = {
@@ -196,7 +196,7 @@ function filterMakes(v){v=v.toLowerCase();document.querySelectorAll('.make').for
 </script>`;
 
 const switcher = (idx, designs) => `
-  <div class="ds-bar"><a href="../index.html" title="All designs">All designs</a>
+  <div class="ds-bar"><a href="${process.env.ART ? '../' : '../index.html'}" title="All designs">All designs</a>
   <a href="${designs[(idx + designs.length - 1) % designs.length].file}" aria-label="Previous design">‹</a>
   <span>${idx + 1}/${designs.length} · ${designs[idx].name}</span>
   <a href="${designs[(idx + 1) % designs.length].file}" aria-label="Next design">›</a></div>`;
