@@ -296,6 +296,6 @@ const gallery = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><met
 <li>Recently serviced vehicles with their real 5-star reviews</li><li>All 52 vehicle makes serviced, with search</li><li>Appointment request form + link to the current Mitchell1 booking system</li>
 <li>Estimates articles, money-saving tips and all page copy</li><li>Contact form (name, email, subject, message) + Google Maps for both shops</li><li>Social: SureCritic, Facebook, Yelp, Google · Payments: Visa, MasterCard, Discover, AmEx, Check</li></ul></div>
 </div></body></html>`;
-fs.writeFileSync(path.join(__dirname, '..', 'index.html'), gallery);
+fs.writeFileSync(path.join(__dirname, '..', 'finalists.html'), gallery);
 fs.writeFileSync(path.join(__dirname, 'designs.json'), JSON.stringify(designs.map(d => ({ slug: d.slug, file: d.file, name: d.name }))));
-console.log('index.html written');
+console.log('finalists.html written');

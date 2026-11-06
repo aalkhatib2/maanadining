@@ -196,7 +196,7 @@ function filterMakes(v){v=v.toLowerCase();document.querySelectorAll('.make').for
 </script>`;
 
 const switcher = (idx, designs) => `
-  <div class="ds-bar"><a href="${process.env.ART ? '../' : '../index.html'}" title="All designs">All designs</a>
+  <div class="ds-bar"><a href="${process.env.ART ? '../' : '../finalists.html'}" title="All designs">All designs</a>
   <a href="${designs[(idx + designs.length - 1) % designs.length].file}" aria-label="Previous design">‹</a>
   <span>${idx + 1}/${designs.length} · ${designs[idx].name}</span>
   <a href="${designs[(idx + 1) % designs.length].file}" aria-label="Next design">›</a></div>`;
