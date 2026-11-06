@@ -237,6 +237,8 @@ const designs = [
   },
 ];
 
+const KEEP = ['redline', 'showroom', 'quickbook'];
+designs.splice(0, designs.length, ...designs.filter(d => KEEP.includes(d.slug)));
 designs.forEach((d, n) => { d.file = `${n + 1}-${d.slug}.html`; });
 const outDir = process.env.ART ? path.join(process.env.ART, 'designs') : path.join(__dirname, '..', 'designs');
 fs.mkdirSync(outDir, { recursive: true });
@@ -283,7 +285,7 @@ const gallery = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><met
 .inv h3{font-size:20px;margin-bottom:12px}.inv ul{columns:3 240px;color:var(--m);font-size:14px;line-height:1.9;padding-left:18px}
 </style></head><body><div class="w">
 <img class="logo" src="${IMG.logo}" alt="Tire Tech & Auto Repair">
-<h1>7 website designs for Tire Tech &amp; Auto Repair</h1>
+<h1>3 website designs for Tire Tech &amp; Auto Repair</h1>
 <p class="sub">Every design is a complete website with all 7 pages and everything on the current site. Click a design to open it, use the menu to move between pages, and use the bar at the bottom to switch designs.</p>
 <div class="g">${designs.map((d, n) => `<a class="c" href="designs/${d.file}" style="text-decoration:none;color:inherit"><div class="shot" style="background-image:url(shots/${d.slug}.jpg)"></div><div class="b"><h2><span>${n + 1}</span>${d.name}</h2><p>${d.blurb}</p><div class="go"><span style="flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;font-size:14px;background:#f3f4f6;color:#111">Open design →</span></div></div></a>`).join('')}</div>
 <div class="inv"><h3>Included in every design (carried over from the current site)</h3><ul>
