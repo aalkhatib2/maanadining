@@ -84,13 +84,13 @@ const S = {
       <div class="media"><img src="${IMG.why}" alt="Tire Tech technician mounting a tire"></div>
     </div>`),
   services: () => sec('svc-home', `
-    ${head('Services', 'Complete & Reliable Auto Service', 'Brakes, oil, tires, exhaust, engine, A/C and electrical — if you don’t see the service you’re looking for, just ask!')}
+    ${head('Services', 'Complete & Reliable Auto Service', 'Brakes, oil changes, tires, exhaust, engine, A/C and electrical. If you don’t see the service you’re looking for, just ask!')}
     <div class="svc-grid">${C.services.map(s => `<a class="svc card" href="#services">${i(s.icon, 'ic')}<h3>${s.title}</h3><p>${s.items.slice(0, 4).join(' · ')}</p><span class="more">See all ${i('arrow')}</span></a>`).join('')}</div>
     <div class="quick">${C.quickServices.map(q => `<span class="chip">${q}</span>`).join('')}<a class="btn btn-g" href="#services">See All Services ${i('arrow')}</a></div>`),
   locations: () => sec('locs-sec', `${head('Locations', 'Tire Tech and Auto Repair Inc. Locations Serving the Tampa Area')}<div class="locs">${C.locations.map(l => locCard(l)).join('')}</div>`),
   amenities: () => sec('amen-sec', `
     <div class="amen-row">
-      <div>${head('Shop Amenities', 'Comfort while you wait')}<div class="amen">${C.amenities.map(([k, t]) => `<div class="am">${i(k)}<span>${t}</span></div>`).join('')}</div></div>
+      <div>${head('While you wait', 'Shop Amenities')}<div class="amen">${C.amenities.map(([k, t]) => `<div class="am">${i(k)}<span>${t}</span></div>`).join('')}</div></div>
       <div class="partners"><span class="kicker">Shop Partners</span><div class="partner">BRIDGESTONE</div><span class="kicker">We accept</span><div class="pay">${C.payments.map(p => `<span>${p}</span>`).join('')}</div></div>
     </div>`),
   why: () => sec('why', `
@@ -100,7 +100,7 @@ const S = {
         <ul class="ticks">${C.why.bullets.map(b => `<li>${i('check')}${b}</li>`).join('')}</ul></div>
     </div>`),
   ttt: () => sec('ttt-sec', `${head('What sets us apart', C.ttt.title, C.ttt.intro)}<div class="ttt">${C.ttt.items.map(([t, p], n) => `<div class="tt card"><span class="num">0${n + 1}</span><h3>${t}</h3><p>${p}</p></div>`).join('')}</div>`),
-  recent: () => sec('recent-sec', `${head('Recently Serviced Vehicles', 'Real jobs. Real 5-star reviews.')}<div class="jobs">${C.recent.slice(0, 6).map(recentCard).join('')}</div><div class="center"><a class="btn btn-g" href="#reviews">Read more reviews ${i('arrow')}</a></div>`),
+  recent: () => sec('recent-sec', `${head('5-star reviews', 'Recently Serviced Vehicles')}<div class="jobs">${C.recent.slice(0, 6).map(recentCard).join('')}</div><div class="center"><a class="btn btn-g" href="#reviews">Read more reviews ${i('arrow')}</a></div>`),
   specials: () => sec('spec-home', `${head('Specials & Coupons', 'Money Saving Promotions')}${coupons()}`),
   cta: () => `<section class="cta"><div class="wrap"><div><h2>Call Now For An Appointment</h2><p>${C.mobileTire}.</p></div><div class="row">${btnBook()}${btnCall(TPA, 'Tampa ' + TPA.phone)}${btnCall(ZEP, 'Zephyrhills ' + ZEP.phone)}</div></div></section>`,
 };

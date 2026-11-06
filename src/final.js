@@ -66,27 +66,70 @@ h1,h2,h3,.big,.num,.tile,.mobile-tire b,.make b{font-style:italic}
   .dock a.dk-book{background:var(--accent);color:#fff}
   .dock .i{width:22px;height:22px}
   body{padding-bottom:72px}
-}`;
+}
+/* ===== Finishing pass: full-width layout, plainer shop styling ===== */
+.wrap{max-width:none;padding-left:clamp(20px,5vw,110px);padding-right:clamp(20px,5vw,110px)}
+:root{--r:8px;--br:6px}
+.sh{max-width:none}.sh p{max-width:760px}
+.sh h2:after,.h2:after{display:none}
+.kicker{letter-spacing:.08em;font-size:13px}
+h1,h2,h3,.big,.tile,.mobile-tire b,.make b{font-style:normal}
+.hero h1,.phero h1,.sh h2,.h2,.cta h2{font-style:italic}
+.hero{background:linear-gradient(90deg,rgba(10,10,12,.96) 0%,rgba(10,10,12,.86) 38%,rgba(10,10,12,.25) 75%,rgba(10,10,12,.1)),var(--hero-img) 70% 35%/cover}
+.hero:after{display:none}
+.hero .wrap{grid-template-columns:minmax(0,1fr) 460px;gap:clamp(32px,6vw,120px);padding-top:clamp(56px,7vw,110px);padding-bottom:clamp(56px,7vw,110px)}
+.hero h1{font-size:clamp(48px,6.2vw,112px);line-height:.98}
+.hero .lead{max-width:640px;font-size:clamp(17px,1.25vw,21px)}
+.where{color:#d4d4d8;font-weight:600;font-size:15px;letter-spacing:.04em;margin-bottom:14px!important;display:flex;align-items:center;gap:10px}
+.where:before{content:"";width:28px;height:3px;background:var(--accent)}
+.book{border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.book h3{font-style:normal;text-transform:none;letter-spacing:-.01em;font-family:var(--fb);font-weight:700;font-size:22px}
+.seg,.seg button{border-radius:8px}
+.trust{background:#141417;border-bottom:1px solid var(--line)}
+.trust .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
+.trust .wrap>div{padding:22px 20px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.trust .wrap>div:first-child{border-left:0;padding-left:0}
+.trust b{font-size:16px;color:#fff}.trust span{font-size:14px;color:var(--muted)}
+.tt .num{display:none}
+.tile>.i:first-child,.svc .ic,.svc-cat .ic{border-radius:6px}
+.coupon{background:transparent}
+.phero{background:linear-gradient(90deg,#0b0b0d 45%,rgba(11,11,13,.55)),var(--hero-img) 70% 35%/cover}
+.why-media img{aspect-ratio:4/3}
+@media(min-width:901px){.split{grid-template-columns:1fr 1fr;gap:clamp(40px,5vw,96px)}}
+.locs-sec .loc{padding:30px}
+@media(min-width:1500px){.makes{grid-template-columns:repeat(6,1fr)}.svc-items{grid-template-columns:repeat(4,1fr)}.jobs{grid-template-columns:repeat(3,1fr)}.ft-cols{grid-template-columns:1.6fr 1fr 1fr 1fr 1fr}}
+@media(min-width:1700px){.svc-grid{grid-template-columns:repeat(6,1fr)}.svc .ic{margin-bottom:12px}}
+@media(max-width:1100px){.trust .wrap{grid-template-columns:repeat(3,1fr)}.trust .wrap>div:nth-child(4){border-left:0;padding-left:0}}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+@media(max-width:640px){.trust .wrap{grid-template-columns:1fr 1fr}.trust .wrap>div{padding:14px 10px;border-left:0}.trust .wrap>div:nth-child(odd){padding-left:0}.trust .wrap>div:last-child{grid-column:1/-1}}
+`;
 
 const hero = () => `<section class="hero"><div class="wrap">
-  <div><span class="slash">${C.tagline}</span>
-    <h1>Tampa’s tire &amp;<br>auto repair <em>experts.</em></h1>
-    <p class="lead">Brakes, oil changes, tires, A/C, engine and electrical, handled by trained technicians at two locations. ${C.mobileTire}.</p>
-    <div class="row">${btnBook()}<a class="btn btn-g" href="#services">Explore Services</a></div>${meta}</div>
+  <div class="hero-copy"><p class="where">Tampa &middot; Zephyrhills, FL</p>
+    <h1>Tire &amp; auto repair<br>you can <em>trust.</em></h1>
+    <p class="lead">Brakes, oil changes, tires, A/C, engine and electrical work by trained technicians at two shops. Stuck on the road? We now offer 24 Hour Mobile Tire Repair.</p>
+    <div class="row">${btnBook()}<a class="btn btn-g" href="#services">Our Services</a></div></div>
   <div class="book"><h3>Choose your shop</h3><p>Book online and we’ll call to confirm your time.</p>
     <div class="seg" role="tablist">${C.locations.map((l, n) => `<button type="button" class="${n ? '' : 'on'}" onclick="pick(${n},this)">${l.city}</button>`).join('')}</div>
     ${C.locations.map((l, n) => `<div class="lp ${n ? '' : 'on'}"><p>${i('pin')}${l.street}, ${l.csz}</p><p>${i('clock')}Mon-Fri 9am-6pm · Sat 9am-5pm <span class="open-badge" data-open></span></p>
       <div class="big-btns"><a class="btn btn-p" href="#appointments">${i('cal')}Schedule Appointment</a><a class="btn btn-s" href="tel:${l.tel}">${i('phone')}Call ${l.phone}</a><a class="btn btn-g" href="${l.map}" target="_blank" rel="noopener">${i('pin')}Get Directions</a></div></div>`).join('')}
   </div></div></section>
+  <div class="trust"><div class="wrap">
+    <div><b>24-Month / 24,000-Mile</b><span>Warranty on repairs</span></div>
+    <div><b>Lifetime Warranty</b><span>on brake pads &amp; shoes</span></div>
+    <div><b>24 Hour Mobile</b><span>tire repair</span></div>
+    <div><b>Bridgestone</b><span>shop partner</span></div>
+    <div><b>Free WiFi &amp; Shuttle</b><span>coffee, snacks &amp; loaners</span></div>
+  </div></div>
   <script>function pick(n,b){document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.lp').forEach((p,i)=>p.classList.toggle('on',i===n))}</script>`;
 
 const why = () => `<section class="why"><div class="wrap"><div class="split">
-  <div class="why-media"><img src="${IMG.why}" alt="Tire Tech technician mounting a tire"><div class="float f1">${stars(5)}<b>5-star reviews</b>from real repair orders</div><div class="float f2"><b>Lifetime Warranty</b>on brake pads &amp; shoes</div></div>
+  <div class="why-media"><img src="${IMG.why}" alt="Tire Tech technician mounting a tire"></div>
   <div><div class="sh"><span class="kicker">Why Choose Us</span><h2>${C.why.title}</h2></div>${C.why.p.map(p => `<p>${p}</p>`).join('')}
     <ul class="ticks">${C.why.bullets.map(b => `<li>${i('check')}${b}</li>`).join('')}</ul></div>
   </div></div></section>`;
 
-const order = ['tiles', 'specials', 'services', 'mobile', 'WHY', 'recent', 'ttt', 'locations', 'amenities', 'welcome', 'cta'];
+const order = ['specials', 'services', 'mobile', 'WHY', 'recent', 'ttt', 'locations', 'amenities', 'welcome', 'cta'];
 const home = hero() + order.map(k => (k === 'WHY' ? why() : S[k]())).join('');
 const dock = `<nav class="dock" aria-label="Quick actions"><a href="tel:${TPA.tel}">${i('phone')}Tampa</a><a href="tel:${ZEP.tel}">${i('phone')}Zephyrhills</a><a class="dk-book" href="#appointments">${i('cal')}Book</a><a href="#contact">${i('pin')}Directions</a></nav>`;
 
