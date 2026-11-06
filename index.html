@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tire Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1012; --bg2:#16191d; --card:#1c2025; --line:#2a2f36;
+  --text:#f2f3f5; --muted:#9aa3ad; --accent:#ffc21a; --accent2:#ff8a00;
+  --ok:#3ccf7e; --light:#f5f6f8; --ink:#111;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.cond{font-family:"Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.5px;line-height:1.02}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:10px;font-weight:700;font-size:15px;border:0;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn-y{background:var(--accent);color:#111}
+.btn-y:hover{background:#ffd34d;transform:translateY(-1px)}
+.btn-o{border:1.5px solid var(--line);color:var(--text);background:transparent}
+.btn-o:hover{border-color:var(--accent);color:var(--accent)}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
+
+/* topbar */
+.topbar{background:var(--accent);color:#111;font-size:13px;font-weight:600}
+.topbar .wrap{display:flex;justify-content:space-between;gap:12px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+header{position:sticky;top:0;z-index:50;background:rgba(14,16,18,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Barlow Condensed";font-weight:800;font-size:28px;letter-spacing:1px}
+.logo span{color:var(--accent)}
+nav.main{display:flex;gap:4px}
+nav.main a{padding:10px 14px;border-radius:8px;font-weight:600;font-size:15px;color:var(--muted)}
+nav.main a:hover,nav.main a.active{color:var(--text);background:var(--bg2)}
+.hdr-cta{display:flex;gap:10px;align-items:center}
+.phone{font-weight:700}
+.burger{display:none;background:none;border:0;color:var(--text);font-size:28px;cursor:pointer}
+
+/* pages */
+.page{display:none;animation:fade .3s ease}
+.page.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+section{padding:80px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:36px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(36px,5vw,54px)}
+.sec-head p{color:var(--muted);max-width:480px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:70px 0 90px;background:
+  radial-gradient(900px 500px at 85% 30%,rgba(255,194,26,.12),transparent 60%),
+  linear-gradient(180deg,#0e1012,#121519)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(52px,7.5vw,96px);margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:19px;color:#c7cdd4;max-width:540px;margin-bottom:28px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.stars{color:var(--accent);letter-spacing:2px}
+.proof{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap}
+.proof div{font-size:14px;color:var(--muted)}
+.proof b{display:block;font-family:"Barlow Condensed";font-size:32px;color:var(--text);line-height:1}
+.tire-wrap{position:relative;display:grid;place-items:center}
+.tire-svg{width:min(460px,90%);animation:spin 18s linear infinite;filter:drop-shadow(0 30px 50px rgba(0,0,0,.6))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge-float{position:absolute;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.badge-float b{display:block;font-size:15px}
+.bf1{top:8%;left:0}.bf2{bottom:10%;right:0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 0 4px rgba(60,207,126,.2)}
+
+/* finder */
+.finder{margin-top:-46px;position:relative;z-index:5}
+.finder-card{background:var(--light);color:var(--ink);border-radius:18px;padding:26px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.finder-tabs{display:flex;gap:6px;margin-bottom:18px}
+.finder-tabs button{padding:10px 16px;border-radius:8px;border:0;background:#e4e7eb;font-weight:700;cursor:pointer;font-size:14px}
+.finder-tabs button.on{background:#111;color:#fff}
+.finder-row{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px;align-items:end}
+.field label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#555;margin-bottom:6px}
+select,input,textarea{width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid #d6dae0;font:inherit;font-size:15px;background:#fff;color:#111}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent2)}
+.finder-hint{font-size:13px;color:#666;margin-top:12px}
+.finder-hint b{font-family:monospace;background:#e9ecef;padding:2px 6px;border-radius:4px}
+
+/* services */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:.2s;position:relative;overflow:hidden}
+.svc:hover{border-color:var(--accent);transform:translateY(-3px)}
+.svc .ico{width:52px;height:52px;border-radius:12px;background:rgba(255,194,26,.12);display:grid;place-items:center;margin-bottom:18px}
+.svc .ico svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-size:26px;margin-bottom:8px}
+.svc p{color:var(--muted);font-size:15px;margin-bottom:16px}
+.svc .price{font-weight:700}
+.svc .price small{color:var(--muted);font-weight:500}
+.svc .arrow{position:absolute;top:24px;right:24px;color:var(--muted);font-size:20px}
+
+/* why */
+.why{background:var(--bg2)}
+.why .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.why-list{display:grid;gap:22px}
+.why-item{display:flex;gap:16px}
+.why-item .n{font-family:"Barlow Condensed";font-size:40px;color:var(--accent);line-height:1;min-width:46px}
+.why-item h4{font-size:18px;margin-bottom:4px}
+.why-item p{color:var(--muted);font-size:15px}
+.shop-visual{aspect-ratio:4/3.4;border-radius:20px;background:
+  linear-gradient(135deg,rgba(255,194,26,.18),transparent 50%),
+  repeating-linear-gradient(90deg,#1b1f24 0 60px,#181b20 60px 120px);
+  border:1px solid var(--line);position:relative;overflow:hidden;display:grid;place-items:center}
+.shop-visual .bay{font-family:"Barlow Condensed";font-size:130px;font-weight:800;color:rgba(255,255,255,.05);position:absolute;bottom:-20px;left:20px}
+.shop-visual .stat{background:var(--light);color:#111;padding:22px 26px;border-radius:14px;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.shop-visual .stat b{font-family:"Barlow Condensed";font-size:64px;display:block;line-height:1}
+
+/* deals */
+.deal{border:2px dashed var(--accent);border-radius:var(--r);padding:26px;background:linear-gradient(135deg,rgba(255,194,26,.08),transparent)}
+.deal .big{font-family:"Barlow Condensed";font-size:56px;font-weight:800;color:var(--accent);line-height:1}
+.deal h3{font-size:24px;margin:8px 0}
+.deal p{color:var(--muted);font-size:14px;margin-bottom:16px}
+.deal code{font-weight:700;background:var(--card);padding:4px 10px;border-radius:6px;color:var(--text)}
+
+/* reviews */
+.rev{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.rev p{margin:12px 0 18px;color:#d2d7dd}
+.rev .who{display:flex;align-items:center;gap:10px;font-size:14px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:800}
+.rev .who small{color:var(--muted);display:block}
+.sample{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+
+/* cta band */
+.band{background:var(--accent);color:#111}
+.band .wrap{display:flex;justify-content:space-between;align-items:center;gap:30px;padding-top:50px;padding-bottom:50px;flex-wrap:wrap}
+.band h2{font-size:clamp(36px,5vw,56px)}
+.band .btn{background:#111;color:#fff}
+
+/* footer */
+footer{background:#0a0b0d;border-top:1px solid var(--line);padding:60px 0 30px;color:var(--muted);font-size:14px}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;margin-bottom:40px}
+footer h5{color:var(--text);font-size:14px;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+footer li{list-style:none;margin-bottom:8px}
+footer a:hover{color:var(--accent)}
+.legal{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* page hero */
+.phero{padding:60px 0 40px;background:linear-gradient(180deg,#14171b,var(--bg));border-bottom:1px solid var(--line)}
+.phero h1{font-size:clamp(46px,6vw,76px);margin:10px 0}
+.phero p{color:var(--muted);max-width:620px;font-size:17px}
+.crumbs{font-size:13px;color:var(--muted)}
+
+/* services page */
+.svc-row{display:grid;grid-template-columns:80px 1fr auto;gap:24px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line)}
+.svc-row .ico{width:64px;height:64px;border-radius:14px;background:rgba(255,194,26,.12);display:grid;place-items:center}
+.svc-row .ico svg{width:32px;height:32px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.svc-row h3{font-size:30px}
+.svc-row p{color:var(--muted);max-width:640px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{font-size:12px;padding:5px 10px;border-radius:20px;background:var(--bg2);border:1px solid var(--line);color:#c7cdd4}
+.svc-row .right{text-align:right}
+.svc-row .right b{font-family:"Barlow Condensed";font-size:34px;display:block}
+.svc-row .right small{color:var(--muted);display:block;margin-bottom:10px}
+
+/* shop */
+.shop{display:grid;grid-template-columns:260px 1fr;gap:30px;padding:40px 0 80px}
+.filters{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;height:fit-content;position:sticky;top:96px}
+.filters h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px;color:var(--muted)}
+.filters h4:first-child{margin-top:0}
+.filters label{display:flex;align-items:center;gap:10px;font-size:14px;padding:5px 0;cursor:pointer}
+.filters input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
+.sizebox{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px;font-family:monospace;font-size:18px;font-weight:700;text-align:center;color:var(--accent)}
+.shop-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+.shop-top select{width:auto;background:var(--card);color:var(--text);border-color:var(--line)}
+.tires{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:.2s}
+.tcard:hover{border-color:#444b55}
+.tcard .img{background:radial-gradient(circle at 50% 45%,#2a2f36,#16191d);aspect-ratio:1.25;display:grid;place-items:center;position:relative}
+.tcard .img svg{width:62%}
+.tcard .ribbon{position:absolute;top:12px;left:12px;background:var(--accent);color:#111;font-size:11px;font-weight:800;padding:4px 8px;border-radius:6px;text-transform:uppercase}
+.tcard .body{padding:18px;flex:1;display:flex;flex-direction:column}
+.tcard .brand{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.tcard h3{font-size:24px;margin:4px 0 8px}
+.tcard .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tcard .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:end}
+.tcard .pr b{font-family:"Barlow Condensed";font-size:32px;line-height:1}
+.tcard .pr small{display:block;color:var(--muted);font-size:12px}
+.tcard .btn{padding:10px 14px;font-size:14px}
+
+/* booking */
+.book{display:grid;grid-template-columns:1fr 360px;gap:30px;padding:40px 0 80px}
+.steps{display:flex;gap:8px;margin-bottom:24px}
+.steps div{flex:1;height:6px;border-radius:4px;background:var(--line)}
+.steps div.on{background:var(--accent)}
+.bcard{background:var(--light);color:#111;border-radius:18px;padding:30px}
+.bcard h2{font-size:38px;margin-bottom:6px}
+.bcard .sub{color:#666;margin-bottom:22px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.opt{border:2px solid #dde1e6;border-radius:12px;padding:16px;cursor:pointer;background:#fff;transition:.15s;text-align:left;font:inherit}
+.opt:hover{border-color:#bbb}
+.opt.on{border-color:var(--accent2);background:#fff8ea}
+.opt b{display:block;font-size:16px}
+.opt small{color:#666}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:18px}
+.day{border:2px solid #dde1e6;border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;background:#fff;font:inherit}
+.day small{display:block;font-size:11px;color:#777;text-transform:uppercase}
+.day b{font-size:20px}
+.day.on{border-color:var(--accent2);background:#fff8ea}
+.day.off{opacity:.35;pointer-events:none}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.time{border:2px solid #dde1e6;border-radius:10px;padding:10px;text-align:center;cursor:pointer;background:#fff;font:inherit;font-weight:600}
+.time.on{border-color:var(--accent2);background:#fff8ea}
+.time.taken{text-decoration:line-through;opacity:.35;pointer-events:none}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.formgrid .full{grid-column:1/-1}
+.bnav{display:flex;justify-content:space-between;margin-top:26px}
+.bnav .btn-o{color:#111;border-color:#ccc}
+.summary{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;height:fit-content;position:sticky;top:96px}
+.summary h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px}
+.sline{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;gap:12px}
+.sline span:first-child{color:var(--muted)}
+.sline span:last-child{text-align:right;font-weight:600}
+.perks{margin-top:18px;display:grid;gap:10px;font-size:14px;color:#c7cdd4}
+.done{text-align:center;padding:30px 10px}
+.done .check{width:80px;height:80px;border-radius:50%;background:var(--ok);display:grid;place-items:center;margin:0 auto 20px;font-size:40px;color:#fff}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:30px;padding:50px 0 80px}
+.map{border-radius:18px;border:1px solid var(--line);min-height:420px;position:relative;overflow:hidden;background:
+  linear-gradient(0deg,transparent 48%,#2a2f36 48% 52%,transparent 52%),
+  linear-gradient(90deg,transparent 30%,#2a2f36 30% 33%,transparent 33%),
+  linear-gradient(90deg,transparent 70%,#23272d 70% 72%,transparent 72%),
+  linear-gradient(0deg,transparent 18%,#23272d 18% 20%,transparent 20%),
+  #181b20}
+.pin{position:absolute;left:50%;top:42%;transform:translate(-50%,-100%);text-align:center}
+.pin .p{width:44px;height:44px;background:var(--accent);border-radius:50% 50% 50% 0;transform:rotate(-45deg);margin:0 auto;box-shadow:0 10px 20px rgba(0,0,0,.5)}
+.pin .lbl{margin-top:14px;background:var(--light);color:#111;padding:8px 12px;border-radius:8px;font-weight:700;font-size:14px;white-space:nowrap}
+.info{display:grid;gap:16px}
+.icard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.icard h3{font-size:24px;margin-bottom:10px}
+.hours div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.hours div.today{color:var(--accent);font-weight:700}
+
+/* mock toolbar */
+.mockbar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:100;background:#fff;color:#111;border-radius:40px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 40px rgba(0,0,0,.5);font-size:13px;font-weight:700;max-width:calc(100vw - 32px);overflow-x:auto}
+.mockbar a{padding:9px 14px;border-radius:30px;white-space:nowrap}
+.mockbar a.active{background:#111;color:#fff}
+.mockbar .lab{padding:9px 10px 9px 14px;color:#888}
+
+.toast{position:fixed;top:90px;right:20px;background:var(--ok);color:#06210f;padding:14px 18px;border-radius:10px;font-weight:700;z-index:120;transform:translateX(140%);transition:.3s}
+.toast.show{transform:none}
+
+@media(max-width:980px){
+  nav.main,.hdr-cta .phone{display:none}
+  .burger{display:block}
+  nav.main.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--bg);padding:12px 20px;border-bottom:1px solid var(--line)}
+  .hero .wrap,.why .wrap,.contact,.book,.shop{grid-template-columns:1fr}
+  .tire-wrap{order:-1}.tire-svg{width:260px}
+  .badge-float{display:none}
+  .finder-row{grid-template-columns:1fr 1fr}
+  .finder-row .btn{grid-column:1/-1;justify-content:center}
+  .grid3,.grid4,.tires{grid-template-columns:1fr 1fr}
+  footer .cols{grid-template-columns:1fr 1fr}
+  .filters,.summary{position:static}
+}
+@media(max-width:620px){
+  section{padding:56px 0}
+  .wrap{padding:0 16px}
+  .grid3,.grid4,.tires,.opts,.formgrid{grid-template-columns:1fr}
+  .svc-row{grid-template-columns:1fr}
+  .svc-row .right{text-align:left}
+  .times{grid-template-columns:repeat(3,1fr)}
+  .days{grid-template-columns:repeat(4,1fr)}
+  .hdr-cta .btn{padding:10px 14px;font-size:14px}
+  .topbar .wrap{justify-content:center;text-align:center}
+  .topbar .hide-sm{display:none}
+  footer .cols{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="tire" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="96" fill="#121417"/>
+      <circle cx="100" cy="100" r="92" fill="none" stroke="#2b3036" stroke-width="10" stroke-dasharray="6 5"/>
+      <circle cx="100" cy="100" r="80" fill="#1a1d21"/>
+      <circle cx="100" cy="100" r="74" fill="none" stroke="#24282e" stroke-width="2"/>
+      <circle cx="100" cy="100" r="58" fill="#b9c0c8"/>
+      <circle cx="100" cy="100" r="54" fill="#8d959e"/>
+      <g fill="#c9cfd6">
+        <path d="M100 52 L108 88 L92 88Z"/><path d="M100 52 L108 88 L92 88Z" transform="rotate(72 100 100)"/>
+        <path d="M100 52 L108 88 L92 88Z" transform="rotate(144 100 100)"/><path d="M100 52 L108 88 L92 88Z" transform="rotate(216 100 100)"/>
+        <path d="M100 52 L108 88 L92 88Z" transform="rotate(288 100 100)"/>
+      </g>
+      <circle cx="100" cy="100" r="16" fill="#2a2f36"/>
+      <circle cx="100" cy="100" r="7" fill="#ffc21a"/>
+      <g fill="#6d757e"><circle cx="100" cy="88" r="2.4"/><circle cx="111.4" cy="96.3" r="2.4"/><circle cx="107" cy="109.7" r="2.4"/><circle cx="93" cy="109.7" r="2.4"/><circle cx="88.6" cy="96.3" r="2.4"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="topbar"><div class="wrap">
+  <span>🔧 Same-day installs · Walk-ins welcome</span>
+  <span class="hide-sm">Mon–Fri 7:30a–6p · Sat 8a–4p</span>
+  <span>Call <b>(555) 014-2290</b></span>
+</div></div>
+
+<header><div class="wrap">
+  <a href="#home" class="logo">
+    <svg width="34" height="34"><use href="#tire"/></svg>TIRE<span>TECH</span>
+  </a>
+  <nav class="main" id="nav">
+    <a href="#home" data-p="home">Home</a>
+    <a href="#tires" data-p="tires">Shop Tires</a>
+    <a href="#services" data-p="services">Services</a>
+    <a href="#contact" data-p="contact">Contact</a>
+  </nav>
+  <div class="hdr-cta">
+    <a class="phone" href="#contact">(555) 014-2290</a>
+    <a class="btn btn-y" href="#book">Book Now</a>
+    <button class="burger" onclick="document.getElementById('nav').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</div></header>
+
+<!-- ================= HOME ================= -->
+<main class="page" id="p-home">
+  <div class="hero"><div class="wrap">
+    <div>
+      <span class="tag"><span class="dot"></span>Open now · 3 bays available today</span>
+      <h1>Tires done right.<br><em>Done today.</em></h1>
+      <p class="lead">New tires, alignments, brakes and repairs from techs who actually explain what your car needs — and what it doesn't. Honest prices, no upsell.</p>
+      <div class="ctas">
+        <a class="btn btn-y" href="#book">Book an Appointment →</a>
+        <a class="btn btn-o" href="#tires">Shop Tires</a>
+      </div>
+      <div class="proof">
+        <div><b>4.9 <span class="stars" style="font-size:18px">★★★★★</span></b>Google rating</div>
+        <div><b>15+</b>Years in business</div>
+        <div><b>45 min</b>Avg. install time</div>
+      </div>
+    </div>
+    <div class="tire-wrap">
+      <svg class="tire-svg" viewBox="0 0 200 200"><use href="#tire"/></svg>
+      <div class="badge-float bf1"><b>Free flat repair</b>on tires bought here</div>
+      <div class="badge-float bf2"><b>✓ Price-match guarantee</b>Found it cheaper? We'll match it.</div>
+    </div>
+  </div></div>
+
+  <div class="wrap finder"><div class="finder-card">
+    <div class="finder-tabs">
+      <button class="on" onclick="ftab(this,'size')">Shop by Tire Size</button>
+      <button onclick="ftab(this,'veh')">Shop by Vehicle</button>
+    </div>
+    <div class="finder-row" id="f-size">
+      <div class="field"><label>Width</label><select><option>205</option><option>215</option><option selected>225</option><option>235</option><option>245</option><option>265</option></select></div>
+      <div class="field"><label>Aspect Ratio</label><select><option>45</option><option>55</option><option selected>65</option><option>70</option></select></div>
+      <div class="field"><label>Rim Size</label><select><option>16"</option><option selected>17"</option><option>18"</option><option>20"</option></select></div>
+      <div class="field"><label>ZIP Code</label><input placeholder="e.g. 90210"></div>
+      <a class="btn btn-y" href="#tires">Find Tires</a>
+    </div>
+    <div class="finder-row" id="f-veh" style="display:none">
+      <div class="field"><label>Year</label><select><option>2024</option><option selected>2021</option><option>2019</option><option>2017</option></select></div>
+      <div class="field"><label>Make</label><select><option>Toyota</option><option selected>Honda</option><option>Ford</option><option>Chevrolet</option></select></div>
+      <div class="field"><label>Model</label><select><option selected>CR-V</option><option>Civic</option><option>Accord</option><option>Pilot</option></select></div>
+      <div class="field"><label>Trim</label><select><option>EX</option><option>LX</option><option>Touring</option></select></div>
+      <a class="btn btn-y" href="#tires">Find Tires</a>
+    </div>
+    <p class="finder-hint">Not sure of your size? Look on your tire's sidewall — it looks like <b>225/65R17</b>. Or just <a href="#contact" style="text-decoration:underline">call us</a> and we'll look it up.</p>
+  </div></div>
+
+  <section><div class="wrap">
+    <div class="sec-head">
+      <div><span class="tag">What we do</span><h2>Full-service tire &amp; auto</h2></div>
+      <p>From a quick patch to a full set with alignment — upfront pricing on everything, approved by you before we start.</p>
+    </div>
+    <div class="grid3" id="svc-grid"></div>
+  </div></section>
+
+  <section class="why"><div class="wrap">
+    <div>
+      <span class="tag">Why Tire Tech</span>
+      <h2 style="font-size:clamp(36px,5vw,54px);margin:10px 0 30px">The shop your mechanic friend would send you to</h2>
+      <div class="why-list">
+        <div class="why-item"><div class="n">01</div><div><h4>Upfront, out-the-door pricing</h4><p>The price we quote includes mounting, balancing, valve stems and disposal. No surprise fees at the counter.</p></div></div>
+        <div class="why-item"><div class="n">02</div><div><h4>Photos of everything we find</h4><p>We text you photos of worn parts so you see what we see — then you decide.</p></div></div>
+        <div class="why-item"><div class="n">03</div><div><h4>Lifetime rotations &amp; flat repair</h4><p>Buy a set of four and every rotation, rebalance and flat repair is free for the life of the tires.</p></div></div>
+        <div class="why-item"><div class="n">04</div><div><h4>In and out fast</h4><p>Most tire installs done in under an hour. Comfortable waiting room with Wi-Fi and coffee.</p></div></div>
+      </div>
+    </div>
+    <div class="shop-visual">
+      <div class="bay">BAY 03</div>
+      <div class="stat"><b>25,000+</b>tires installed</div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head">
+      <div><span class="tag">This month</span><h2>Current deals</h2></div>
+      <p>Mention the code when you book or show it at the counter.</p>
+    </div>
+    <div class="grid3">
+      <div class="deal"><div class="big">$80 OFF</div><h3>Any set of 4 tires</h3><p>Plus free alignment check. Valid on all major brands.</p><code>TT80</code></div>
+      <div class="deal"><div class="big">$69.99</div><h3>4-wheel alignment</h3><p>Regularly $99. Includes printout of before &amp; after specs.</p><code>ALIGN70</code></div>
+      <div class="deal"><div class="big">FREE</div><h3>Brake inspection</h3><p>Pads, rotors, fluid — checked with photos, no obligation.</p><code>BRAKECHECK</code></div>
+    </div>
+  </div></section>
+
+  <section style="background:var(--bg2)"><div class="wrap">
+    <div class="sec-head">
+      <div><span class="tag">Reviews</span><h2>Drivers trust us</h2></div>
+      <p><span class="stars">★★★★★</span> &nbsp;4.9 average from 600+ Google reviews</p>
+    </div>
+    <div class="grid3">
+      <div class="rev"><span class="stars">★★★★★</span><p>"Got a nail in my tire on the way to work. They patched it in 20 minutes and didn't try to sell me a new one. Customer for life."</p><div class="who"><div class="av">M</div><div>Marcus T.<small>Google review</small></div></div></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Best price in town on a set of Michelins, and the quote was exactly what I paid. They even texted me pics of my brakes."</p><div class="who"><div class="av">S</div><div>Sarah L.<small>Google review</small></div></div></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Booked online at 8, was out the door by 9:15 with four new tires and an alignment. Super easy."</p><div class="who"><div class="av">D</div><div>David R.<small>Google review</small></div></div></div>
+    </div>
+    <p class="sample" style="margin-top:14px">Mockup — sample reviews, to be replaced with real Google reviews</p>
+  </div></section>
+
+  <div class="band"><div class="wrap">
+    <h2>Need tires today?</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#book">Book Online →</a><a class="btn" style="background:transparent;color:#111;border:2px solid #111" href="#contact">(555) 014-2290</a></div>
+  </div></div>
+</main>
+
+<!-- ================= TIRES ================= -->
+<main class="page" id="p-tires">
+  <div class="phero"><div class="wrap">
+    <div class="crumbs">Home / Shop Tires</div>
+    <h1>Shop Tires</h1>
+    <p>Prices shown are per tire, <b style="color:var(--text)">installed</b> — mounting, balancing, new valve stems and disposal included.</p>
+  </div></div>
+  <div class="wrap shop">
+    <aside class="filters">
+      <h4>Your size</h4>
+      <div class="sizebox">225/65R17</div>
+      <a href="#home" style="font-size:13px;color:var(--accent);display:block;margin-top:8px">Change size</a>
+      <h4>Tire type</h4>
+      <label><input type="checkbox" checked> All-Season</label>
+      <label><input type="checkbox"> All-Terrain</label>
+      <label><input type="checkbox"> Performance</label>
+      <label><input type="checkbox"> Winter</label>
+      <h4>Brand</h4>
+      <label><input type="checkbox"> Michelin</label>
+      <label><input type="checkbox"> Bridgestone</label>
+      <label><input type="checkbox"> Goodyear</label>
+      <label><input type="checkbox"> Continental</label>
+      <label><input type="checkbox"> Budget / Value</label>
+      <h4>Price per tire</h4>
+      <label><input type="checkbox"> Under $120</label>
+      <label><input type="checkbox"> $120 – $180</label>
+      <label><input type="checkbox"> $180+</label>
+    </aside>
+    <div>
+      <div class="shop-top">
+        <span style="color:var(--muted)"><b style="color:var(--text)">6 tires</b> fit 225/65R17</span>
+        <select><option>Sort: Recommended</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Best Rated</option></select>
+      </div>
+      <div class="tires" id="tire-grid"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ================= SERVICES ================= -->
+<main class="page" id="p-services">
+  <div class="phero"><div class="wrap">
+    <div class="crumbs">Home / Services</div>
+    <h1>Services &amp; Pricing</h1>
+    <p>Straight answers and starting prices. Every job gets a written quote you approve before we touch your car.</p>
+  </div></div>
+  <div class="wrap" id="svc-list" style="padding-bottom:80px"></div>
+  <div class="band"><div class="wrap">
+    <h2>Not sure what you need?</h2>
+    <a class="btn" href="#book">Book a Free Inspection →</a>
+  </div></div>
+</main>
+
+<!-- ================= BOOK ================= -->
+<main class="page" id="p-book">
+  <div class="phero"><div class="wrap">
+    <div class="crumbs">Home / Book Appointment</div>
+    <h1>Book in 60 seconds</h1>
+    <p>Pick a service and a time. We'll text you a confirmation and a reminder the day before.</p>
+  </div></div>
+  <div class="wrap book">
+    <div>
+      <div class="steps"><div class="on"></div><div></div><div></div><div></div></div>
+      <div class="bcard" id="bstep"></div>
+    </div>
+    <aside class="summary">
+      <h4>Your appointment</h4>
+      <div class="sline"><span>Service</span><span id="s-svc">—</span></div>
+      <div class="sline"><span>Date</span><span id="s-date">—</span></div>
+      <div class="sline"><span>Time</span><span id="s-time">—</span></div>
+      <div class="sline"><span>Vehicle</span><span id="s-veh">—</span></div>
+      <div class="sline"><span>Est. price</span><span id="s-price">—</span></div>
+      <div class="perks">
+        <div>✓ Free cancellation anytime</div>
+        <div>✓ Text updates when your car is ready</div>
+        <div>✓ Pay at pickup — nothing charged now</div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- ================= CONTACT ================= -->
+<main class="page" id="p-contact">
+  <div class="phero"><div class="wrap">
+    <div class="crumbs">Home / Contact</div>
+    <h1>Visit the shop</h1>
+    <p>Walk-ins welcome — but booking online gets you the next open bay.</p>
+  </div></div>
+  <div class="wrap contact">
+    <div class="map"><div class="pin"><div class="p"></div><div class="lbl">Tire Tech · 1234 Main St</div></div></div>
+    <div class="info">
+      <div class="icard">
+        <h3>Location &amp; Phone</h3>
+        <p style="color:#c7cdd4">1234 Main Street<br>Your City, ST 00000</p>
+        <p style="margin-top:10px;font-size:22px;font-weight:700">(555) 014-2290</p>
+        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><a class="btn btn-y" href="#contact">Get Directions</a><a class="btn btn-o" href="#contact">Text Us</a></div>
+      </div>
+      <div class="icard hours">
+        <h3>Hours</h3>
+        <div><span>Monday</span><span>7:30a – 6:00p</span></div>
+        <div><span>Tuesday</span><span>7:30a – 6:00p</span></div>
+        <div><span>Wednesday</span><span>7:30a – 6:00p</span></div>
+        <div><span>Thursday</span><span>7:30a – 6:00p</span></div>
+        <div class="today"><span>Friday (today)</span><span>7:30a – 6:00p</span></div>
+        <div><span>Saturday</span><span>8:00a – 4:00p</span></div>
+        <div><span>Sunday</span><span>Closed</span></div>
+      </div>
+      <div class="icard">
+        <h3>Send a message</h3>
+        <div class="formgrid">
+          <input placeholder="Name"><input placeholder="Phone">
+          <textarea class="full" rows="3" placeholder="What can we help with?"></textarea>
+          <button class="btn btn-y full" onclick="toast('Message sent — we\'ll reply shortly!')">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div class="cols">
+    <div>
+      <div class="logo" style="margin-bottom:12px"><svg width="34" height="34"><use href="#tire"/></svg>TIRE<span>TECH</span></div>
+      <p>Honest tire and auto service. Family-owned, locally trusted.</p>
+    </div>
+    <div><h5>Shop</h5><ul><li><a href="#tires">All Tires</a></li><li><a href="#tires">All-Season</a></li><li><a href="#tires">Truck &amp; SUV</a></li><li><a href="#tires">Winter</a></li></ul></div>
+    <div><h5>Services</h5><ul><li><a href="#services">Tire Install</a></li><li><a href="#services">Alignment</a></li><li><a href="#services">Brakes</a></li><li><a href="#services">Oil Change</a></li></ul></div>
+    <div><h5>Visit</h5><ul><li>1234 Main Street</li><li>Your City, ST 00000</li><li>(555) 014-2290</li><li><a href="#book">Book Online</a></li></ul></div>
+  </div>
+  <div class="legal"><span>© 2026 Tire Tech. All rights reserved.</span><span>Website mockup · contact details are placeholders</span></div>
+</div></footer>
+
+<div class="mockbar">
+  <span class="lab">MOCKUP</span>
+  <a href="#home" data-p="home">Home</a>
+  <a href="#tires" data-p="tires">Shop Tires</a>
+  <a href="#services" data-p="services">Services</a>
+  <a href="#book" data-p="book">Booking</a>
+  <a href="#contact" data-p="contact">Contact</a>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const IC={
+  tire:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/>',
+  align:'<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>',
+  brake:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M5 7a9 9 0 0 1 4-3"/>',
+  oil:'<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',
+  patch:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/>',
+  bolt:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>'
+};
+const ico=k=>`<svg viewBox="0 0 24 24">${IC[k]}</svg>`;
+const SERVICES=[
+  {k:'tire',n:'New Tires',d:'All major brands in stock. Mount, balance, valve stems & disposal included.',p:'$89',u:'/tire installed',c:['Same-day','Price match','Road hazard option']},
+  {k:'align',n:'Wheel Alignment',d:'Computerized 4-wheel alignment to factory specs. Protects your new tires.',p:'$99',u:'4-wheel',c:['Before/after printout','~45 min']},
+  {k:'brake',n:'Brakes',d:'Pads, rotors, calipers and fluid. Free inspection with photos texted to you.',p:'$149',u:'/axle',c:['Free inspection','12-mo warranty']},
+  {k:'patch',n:'Flat Repair',d:'Proper plug-patch from the inside — not just a plug. Usually 20 minutes.',p:'$25',u:'/tire',c:['Free on our tires','Walk-in']},
+  {k:'oil',n:'Oil Change',d:'Full synthetic or conventional, new filter, fluid top-off and tire pressure check.',p:'$59',u:'synthetic',c:['20 min','Multi-point check']},
+  {k:'bolt',n:'Rotation & Balance',d:'Even wear, smoother ride, longer tread life. Recommended every 5,000 miles.',p:'$35',u:'',c:['Free with tire set','Walk-in']},
+];
+document.getElementById('svc-grid').innerHTML=SERVICES.map(s=>`
+  <a class="svc" href="#book"><span class="arrow">↗</span><div class="ico">${ico(s.k)}</div><h3>${s.n}</h3><p>${s.d}</p>
+  <div class="price"><small>From</small> ${s.p} <small>${s.u}</small></div></a>`).join('');
+document.getElementById('svc-list').innerHTML=SERVICES.map(s=>`
+  <div class="svc-row"><div class="ico">${ico(s.k)}</div>
+  <div><h3>${s.n}</h3><p>${s.d}</p><div class="chips">${s.c.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div>
+  <div class="right"><small>Starting at</small><b>${s.p}</b><a class="btn btn-y" href="#book" onclick="presel('${s.n}')">Book</a></div></div>`).join('');
+
+const TIRES=[
+  {b:'Michelin',n:'Defender LTX M/S',t:'All-Season',m:'70k mi warranty',r:4.9,p:219,tag:'Top pick'},
+  {b:'Bridgestone',n:'Dueler H/L Alenza',t:'All-Season',m:'80k mi warranty',r:4.7,p:198},
+  {b:'Goodyear',n:'Assurance WeatherReady',t:'All-Weather',m:'60k mi warranty',r:4.6,p:184,tag:'Best for rain'},
+  {b:'Continental',n:'CrossContact LX25',t:'All-Season',m:'70k mi warranty',r:4.7,p:176},
+  {b:'Falken',n:'Wildpeak A/T3W',t:'All-Terrain',m:'55k mi warranty',r:4.8,p:162},
+  {b:'Value Line',n:'Touring A/S',t:'All-Season',m:'45k mi warranty',r:4.3,p:109,tag:'Best value'},
+];
+document.getElementById('tire-grid').innerHTML=TIRES.map(t=>`
+  <div class="tcard"><div class="img">${t.tag?`<span class="ribbon">${t.tag}</span>`:''}<svg viewBox="0 0 200 200"><use href="#tire"/></svg></div>
+  <div class="body"><div class="brand">${t.b}</div><h3>${t.n}</h3>
+  <div class="meta"><span class="chip">${t.t}</span><span class="chip">${t.m}</span><span class="chip"><span class="stars">★</span> ${t.r}</span></div>
+  <div class="foot"><div class="pr"><b>$${t.p}</b><small>per tire, installed · set of 4: $${t.p*4}</small></div>
+  <a class="btn btn-y" href="#book" onclick="presel('New Tires','${t.b} ${t.n}',${t.p*4})">Book</a></div></div></div>`).join('');
+
+/* booking flow */
+const B={step:0,svc:null,price:null,day:null,time:null,veh:null};
+const BS=[{n:'New Tires',p:'from $356'},{n:'Wheel Alignment',p:'$99'},{n:'Brakes',p:'from $149'},{n:'Flat Repair',p:'$25'},{n:'Oil Change',p:'$59'},{n:'Rotation & Balance',p:'$35'},{n:'Free Inspection',p:'Free'},{n:'Something else',p:'Quote'}];
+function presel(n,detail,price){B.svc=detail?`${n} — ${detail}`:n;B.price=price?`$${price}`:(BS.find(x=>x.n===n)||{}).p;B.step=1;}
+function days(){const out=[];const d=new Date();for(let i=0;i<7;i++){const x=new Date(d);x.setDate(d.getDate()+i);out.push(x)}return out}
+function renderBook(){
+  document.querySelectorAll('.steps div').forEach((e,i)=>e.classList.toggle('on',i<=B.step));
+  const el=document.getElementById('bstep');let h='';
+  if(B.step===0){
+    h=`<h2>What do you need?</h2><p class="sub">Pick one — you can add more at the shop.</p><div class="opts">${BS.map(s=>`<button class="opt ${B.svc===s.n?'on':''}" onclick="B.svc='${s.n}';B.price='${s.p}';renderBook()"><b>${s.n}</b><small>${s.p}</small></button>`).join('')}</div>
+    <div class="bnav"><span></span><button class="btn btn-y" onclick="next()" ${B.svc?'':'disabled style="opacity:.4"'}>Continue →</button></div>`;
+  }else if(B.step===1){
+    const taken=['8:00','10:30','1:00'];
+    h=`<h2>Pick a time</h2><p class="sub">Next available bay is highlighted.</p><div class="days">${days().map((d,i)=>{const sun=d.getDay()===0;const lbl=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});return `<button class="day ${sun?'off':''} ${B.day===lbl?'on':''}" onclick="B.day='${lbl}';renderBook()"><small>${i===0?'Today':d.toLocaleDateString('en-US',{weekday:'short'})}</small><b>${d.getDate()}</b></button>`}).join('')}</div>
+    <div class="times">${['7:30','8:00','9:00','10:30','11:30','1:00','2:30','4:00'].map(t=>`<button class="time ${taken.includes(t)?'taken':''} ${B.time===t+' '+ap(t)?'on':''}" onclick="B.time='${t} ${ap(t)}';renderBook()">${t} ${ap(t)}</button>`).join('')}</div>
+    <div class="bnav"><button class="btn btn-o" onclick="back()">← Back</button><button class="btn btn-y" onclick="next()" ${B.day&&B.time?'':'disabled style="opacity:.4"'}>Continue →</button></div>`;
+  }else if(B.step===2){
+    h=`<h2>Your vehicle</h2><p class="sub">So we have the right parts ready.</p><div class="formgrid">
+    <div class="field"><label>Year</label><select id="vy"><option>2024</option><option>2023</option><option selected>2021</option><option>2019</option></select></div>
+    <div class="field"><label>Make</label><select id="vm"><option>Toyota</option><option selected>Honda</option><option>Ford</option><option>Chevrolet</option><option>Nissan</option></select></div>
+    <div class="field full"><label>Model</label><input id="vmod" value="CR-V"></div>
+    <div class="field full"><label>Anything we should know? (optional)</label><textarea rows="2" placeholder="e.g. vibration at highway speeds"></textarea></div></div>
+    <div class="bnav"><button class="btn btn-o" onclick="back()">← Back</button><button class="btn btn-y" onclick="B.veh=vy.value+' '+vm.value+' '+vmod.value;next()">Continue →</button></div>`;
+  }else if(B.step===3){
+    h=`<h2>Almost done</h2><p class="sub">We'll text your confirmation.</p><div class="formgrid">
+    <div class="field"><label>First name</label><input placeholder="Jane"></div><div class="field"><label>Last name</label><input placeholder="Doe"></div>
+    <div class="field"><label>Mobile</label><input placeholder="(555) 555-5555"></div><div class="field"><label>Email</label><input placeholder="you@email.com"></div>
+    <div class="field full"><label><input type="checkbox" checked style="width:auto;margin-right:8px">I'll wait at the shop</label></div></div>
+    <div class="bnav"><button class="btn btn-o" onclick="back()">← Back</button><button class="btn btn-y" onclick="next()">Confirm Booking ✓</button></div>`;
+  }else{
+    h=`<div class="done"><div class="check">✓</div><h2>You're booked!</h2><p class="sub">${B.svc} · ${B.day} at ${B.time}</p><p style="color:#555;margin-bottom:20px">A confirmation text is on its way. See you soon!</p><a class="btn btn-y" href="#home" onclick="Object.assign(B,{step:0,svc:null,price:null,day:null,time:null,veh:null})">Back to Home</a></div>`;
+  }
+  el.innerHTML=h;
+  s_svc.textContent=B.svc||'—';s_date.textContent=B.day||'—';s_time.textContent=B.time||'—';s_veh.textContent=B.veh||'—';s_price.textContent=B.price||'—';
+}
+const s_svc=document.getElementById('s-svc'),s_date=document.getElementById('s-date'),s_time=document.getElementById('s-time'),s_veh=document.getElementById('s-veh'),s_price=document.getElementById('s-price');
+const ap=t=>(+t.split(':')[0]>=7&&+t.split(':')[0]<12)?'AM':'PM';
+function next(){B.step++;renderBook();scrollTo({top:0,behavior:'smooth'})}
+function back(){B.step--;renderBook()}
+
+function ftab(b,w){document.querySelectorAll('.finder-tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('f-size').style.display=w==='size'?'':'none';document.getElementById('f-veh').style.display=w==='veh'?'':'none'}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+function route(){
+  const p=(location.hash||'#home').slice(1);const id=document.getElementById('p-'+p)?p:'home';
+  document.querySelectorAll('.page').forEach(x=>x.classList.toggle('show',x.id==='p-'+id));
+  document.querySelectorAll('[data-p]').forEach(a=>a.classList.toggle('active',a.dataset.p===id));
+  document.getElementById('nav').classList.remove('open');
+  if(id==='book')renderBook();
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
